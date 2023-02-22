@@ -4,12 +4,12 @@ import 'package:optima/shared/theme.dart';
 class CustomButton extends StatelessWidget {
   final String title;
   final double width;
-  // final Function() onPressed;
+  final Function() onPressed;
   const CustomButton({
     Key? key,
     required this.title,
     this.width = double.infinity,
-    // required this.onPressed,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class CustomButton extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: () {},
+        onPressed: onPressed,
         child: Text(
           title,
           style: textStyle.copyWith(

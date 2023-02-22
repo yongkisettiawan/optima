@@ -36,9 +36,11 @@ class GetStarted extends StatelessWidget {
               const SizedBox(
                 height: 200,
               ),
-              const CustomButton(
+              CustomButton(
                 title: 'Get Started',
-                // onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/homePage');
+                },
               ),
             ],
           ),

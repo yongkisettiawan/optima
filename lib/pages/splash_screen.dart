@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: kPrimaryColor,
       body: Center(
         child: Text(
-          'OPTIMA',
+          'O P T I M A',
           style: textStyle.copyWith(
             fontSize: 32,
             fontWeight: FontWeight.w800,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:optima/pages/get_started.dart';
+import 'package:optima/pages/home_page.dart';
 import 'package:optima/pages/splash_screen.dart';
 
 void main() {
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const SplashScreen(),
         '/getStarted': (context) => const GetStarted(),
+        '/homePage': (context) => const HomePage(),
       },
     );
   }
