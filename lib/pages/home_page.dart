@@ -16,9 +16,6 @@ class HomePage extends StatelessWidget {
           color: kWhiteColor,
           padding: const EdgeInsets.only(
             top: 13,
-            // bottom: 22,
-            // left: 50,
-            // right: 50,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -43,65 +40,70 @@ class HomePage extends StatelessWidget {
     }
 
     Widget content() {
-      return Container(
-        padding: const EdgeInsets.all(10),
-        margin: const EdgeInsets.only(bottom: 15),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(defaultRadius),
-          color: kWhiteColor,
-        ),
-        child: Row(
-          children: [
-            Container(
-              height: 60,
-              width: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: kPrimaryColor,
-              ),
-              child: Center(
-                child: Image.asset(
-                  'assets/DatabaseOutlined.png',
-                  width: 32,
-                  height: 32,
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/classroompage');
+        },
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          margin: const EdgeInsets.only(bottom: 15),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(defaultRadius),
+            color: kWhiteColor,
+          ),
+          child: Row(
+            children: [
+              Container(
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: kPrimaryColor,
                 ),
-              ),
-            ),
-            const SizedBox(
-              width: 16,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Logika Pemogramman',
-                  style: textStyle.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                child: Center(
+                  child: Image.asset(
+                    'assets/DatabaseOutlined.png',
+                    width: 32,
+                    height: 32,
                   ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      '30 of 30 ',
-                      style: textStyle.copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.normal,
-                        color: kSecondaryColor,
-                      ),
+              ),
+              const SizedBox(
+                width: 16,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Logika Pemogramman',
+                    style: textStyle.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
                     ),
-                    Text(
-                      'session finished',
-                      style: textStyle.copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.normal,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        '30 of 30 ',
+                        style: textStyle.copyWith(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                          color: kSecondaryColor,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            )
-          ],
+                      Text(
+                        'session finished',
+                        style: textStyle.copyWith(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       );
     }
