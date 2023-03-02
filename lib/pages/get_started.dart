@@ -39,7 +39,7 @@ class GetStarted extends StatelessWidget {
               CustomButton(
                 title: 'Get Started',
                 onPressed: () {
-                  Navigator.pushNamed(context, '/homePage');
+                  Navigator.pushNamed(context, '/mainPage');
                 },
               ),
             ],
