@@ -21,38 +21,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // Widget customBottomNavigation() {
-    //   return Align(
-    //     alignment: Alignment.bottomCenter,
-    //     child: Container(
-    //       width: double.infinity,
-    //       height: 80,
-    //       color: kWhiteColor,
-    //       padding: const EdgeInsets.only(
-    //         top: 13,
-    //       ),
-    //       child: Row(
-    //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //         // ignore: prefer_const_literals_to_create_immutables
-    //         children: [
-    //           const CustomBottomNavigation(
-    //             navIcon: 'assets/home_nav.png',
-    //             navName: 'Home',
-    //           ),
-    //           const CustomBottomNavigation(
-    //             navIcon: 'assets/calender_nav.png',
-    //             navName: 'Calender',
-    //           ),
-    //           const CustomBottomNavigation(
-    //             navIcon: 'assets/stats_nav.png',
-    //             navName: 'Stats',
-    //           )
-    //         ],
-    //       ),
-    //     ),
-    //   );
-    // }
-
     Widget content() {
       return GestureDetector(
         onTap: () {
@@ -200,28 +168,69 @@ class _FloatingWidgetState extends State<FloatingWidget> {
           ),
         ),
         Positioned(
-          bottom: 200,
-          right: 20,
           child: Container(
-            width: 200,
-            height: 200,
+            padding: const EdgeInsets.all(10.0),
+            margin: EdgeInsets.only(
+              left: defaultMargin,
+              right: defaultMargin,
+              top: 30,
+              bottom: 100,
+            ),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
             color: Colors.white,
             child: Column(
               children: [
                 const Text(
-                  'Floating Widget',
+                  'Kelas Baru',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    widget.hideCallback();
-                  },
-                  child: const Text('Hide Widget'),
+                // const SizedBox(height: 20),
+                Expanded(child: Container()),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          widget.hideCallback();
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: kWhiteColor,
+                            side: BorderSide(
+                              color: kPrimaryColor,
+                              width: 1,
+                            )),
+                        child: Text(
+                          'batal',
+                          style: textStyle.copyWith(
+                            color: kPrimaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: kPrimaryColor,
+                        ),
+                        onPressed: () {},
+                        child: Text(
+                          'simpan',
+                          style: textStyle.copyWith(
+                            color: kWhiteColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
