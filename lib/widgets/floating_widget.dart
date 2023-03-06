@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:optima/shared/theme.dart';
-import 'package:optima/widgets/text_form_file.dart';
+import 'package:optima/widgets/custom_text_form_file.dart';
 
 class FloatingWidget extends StatefulWidget {
   final VoidCallback hideCallback;
@@ -14,6 +14,26 @@ class FloatingWidget extends StatefulWidget {
 }
 
 class _FloatingWidgetState extends State<FloatingWidget> {
+  final List<CustomTextFormFile> _customTextFormFiles = [];
+
+  void _addCustomTextFormFile() {
+    setState(() {
+      _customTextFormFiles.add(
+        CustomTextFormFile(
+          deleteCallback: () {
+            _removeCustomTextFormFile();
+          },
+        ),
+      );
+    });
+  }
+
+  void _removeCustomTextFormFile() {
+    setState(() {
+      _customTextFormFiles.removeLast();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -44,7 +64,7 @@ class _FloatingWidgetState extends State<FloatingWidget> {
               children: [
                 const Center(
                   child: Text(
-                    'Kelas Baru',
+                    'Pelajaran Baru',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -61,7 +81,7 @@ class _FloatingWidgetState extends State<FloatingWidget> {
                       TextFormField(
                         decoration: InputDecoration(
                           // contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-                          hintText: 'class name',
+                          hintText: 'judul',
                           hintStyle: textStyle.copyWith(
                             color: kGreyTextColor,
                             fontSize: 14,
@@ -74,7 +94,7 @@ class _FloatingWidgetState extends State<FloatingWidget> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.symmetric(vertical: 10),
+                        margin: const EdgeInsets.symmetric(vertical: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -86,9 +106,7 @@ class _FloatingWidgetState extends State<FloatingWidget> {
                               ),
                             ),
                             IconButton(
-                              onPressed: () {
-                                // aksi saat tombol tambah ditekan
-                              },
+                              onPressed: _addCustomTextFormFile,
                               icon: Icon(Icons.add, color: kGreyTextColor),
                               splashRadius: 24,
                               padding: EdgeInsets.zero,
@@ -97,24 +115,10 @@ class _FloatingWidgetState extends State<FloatingWidget> {
                           ],
                         ),
                       ),
-                      const CustomTextFormFile(),
-                      const CustomTextFormFile(),
-                      const CustomTextFormFile(),
-                      const CustomTextFormFile(),
-                      const CustomTextFormFile(),
-                      const CustomTextFormFile(),
-                      const CustomTextFormFile(),
-                      const CustomTextFormFile(),
-                      const CustomTextFormFile(),
-                      const CustomTextFormFile(),
+                      ..._customTextFormFiles,
                     ],
                   ),
                 ),
-
-                // const SizedBox(height: 20),
-                // const Expanded(
-                //   child: SizedBox(),
-                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
