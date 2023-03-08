@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../local/database_halper.dart';
+import '../utils/database_halper.dart';
 import '../models/kelas_model.dart';
 
 class KelasProvider extends ChangeNotifier {

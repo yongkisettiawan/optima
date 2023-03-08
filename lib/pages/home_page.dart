@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:optima/database/local/database_halper.dart';
+import 'package:optima/database/utils/database_halper.dart';
 import 'package:optima/database/models/kelas_model.dart';
 import 'package:optima/shared/theme.dart';
 import '../widgets/floating_widget.dart';
