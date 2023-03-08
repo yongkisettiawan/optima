@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:optima/database/local/database_halper.dart';
+import 'package:optima/database/models/kelas_model.dart';
 import 'package:optima/shared/theme.dart';
 import '../widgets/floating_widget.dart';
 
@@ -56,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Logika Pemogramman',
+                    "pelajaran.title",
                     style: textStyle.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -65,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     children: [
                       Text(
-                        '30 of 30 ',
+                        '12 0f 12 ',
                         style: textStyle.copyWith(
                           fontSize: 12,
                           fontWeight: FontWeight.normal,
@@ -130,6 +134,8 @@ class _HomePageState extends State<HomePage> {
                 : const SizedBox(),
           ],
         ),
+
+        //Tambah Pelajaran Baru
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             setState(() {
