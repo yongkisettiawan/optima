@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:optima/pages/calender_page.dart';
 import 'package:optima/pages/stats_pages.dart';
 import 'package:optima/shared/theme.dart';
-import 'package:provider/provider.dart';
 
 import 'home_page.dart';
 

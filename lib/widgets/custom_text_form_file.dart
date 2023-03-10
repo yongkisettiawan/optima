@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../shared/theme.dart';
 
+// ignore: must_be_immutable
 class CustomTextFormFile extends StatelessWidget {
   final void Function(int) deleteCallback;
   int index;
