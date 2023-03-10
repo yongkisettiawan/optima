@@ -19,7 +19,8 @@ class DatabaseHelper {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'optima_app.db');
 
-    return await openDatabase(path, version: 1, onCreate: _createDb);
+    final db = await openDatabase(path, version: 1, onCreate: _createDb);
+    return db;
   }
 
   Future<void> _createDb(Database db, int version) async {
@@ -37,7 +38,7 @@ class DatabaseHelper {
 
     // create TabelSilabus table
     await db.execute('''
-      CREATE TABLE ${TabelSilabus().runtimeType.toString()} (
+      CREATE TABLE ${TabelSilabus.tableName} (
         silabusId INTEGER PRIMARY KEY AUTOINCREMENT,
         modul TEXT,
         tugas TEXT,

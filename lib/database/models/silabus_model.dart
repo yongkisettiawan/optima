@@ -1,14 +1,18 @@
 class TabelSilabus {
+  static const String tableName = 'tabelsilabus';
+
   int? silabusId;
   String? modul;
   String? tugas;
   bool? status;
+  int? kelasId;
 
   TabelSilabus({
     this.silabusId,
     this.modul,
     this.tugas,
     this.status,
+    this.kelasId,
   });
 
   Map<String, dynamic> toMap() {
@@ -17,6 +21,7 @@ class TabelSilabus {
       'modul': modul,
       'tugas': tugas,
       'status': status == true ? 1 : 0,
+      'kelasId': kelasId,
     };
   }
 
@@ -26,6 +31,7 @@ class TabelSilabus {
       modul: map['modul'],
       tugas: map['tugas'],
       status: map['status'] == 1,
+      kelasId: map['kelasId'],
     );
   }
 }
