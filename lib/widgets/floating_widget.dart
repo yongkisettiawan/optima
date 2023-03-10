@@ -22,13 +22,13 @@ class _FloatingWidgetState extends State<FloatingWidget> {
           key: ValueKey(index),
           deleteCallback: (int index) {
             _removeCustomTextFormFile(index);
-            print('romove $index');
+            // print('romove $index');
           },
           index: index,
         ),
       );
     });
-    print('add $index');
+    // print('add $index');
   }
 
   void _removeCustomTextFormFile(int i) {
@@ -40,7 +40,7 @@ class _FloatingWidgetState extends State<FloatingWidget> {
       for (int i = 0; i < _customTextFormFiles.length; i++) {
         _customTextFormFiles[i].index = i;
       }
-      print('nilai $i');
+      // print('nilai $i');
     });
   }
 

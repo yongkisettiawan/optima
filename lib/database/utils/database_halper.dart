@@ -40,6 +40,7 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE ${TabelSilabus.tableName} (
         silabusId INTEGER PRIMARY KEY AUTOINCREMENT,
+        namaSilabus TEXT,
         modul TEXT,
         tugas TEXT,
         status INTEGER,

@@ -2,36 +2,44 @@ class TabelSilabus {
   static const String tableName = 'tabelsilabus';
 
   int? silabusId;
-  String? modul;
-  String? tugas;
-  bool? status;
+  String? namaSilabus;
   int? kelasId;
+  DateTime? createAt;
+  DateTime? updateAt;
+  bool? status;
 
   TabelSilabus({
     this.silabusId,
-    this.modul,
-    this.tugas,
-    this.status,
+    this.namaSilabus,
     this.kelasId,
+    this.createAt,
+    this.updateAt,
+    this.status,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'silabusId': silabusId,
-      'modul': modul,
-      'tugas': tugas,
-      'status': status == true ? 1 : 0,
+      'namaSilabus': namaSilabus,
       'kelasId': kelasId,
+      'createAt': createAt?.millisecondsSinceEpoch,
+      'updateAt': updateAt?.millisecondsSinceEpoch,
+      'status': status == true ? 1 : 0,
     };
   }
 
   static TabelSilabus fromMap(Map<String, dynamic> map) {
     return TabelSilabus(
       silabusId: map['silabusId'],
-      modul: map['modul'],
-      tugas: map['tugas'],
-      status: map['status'] == 1,
+      namaSilabus: map['namaSilabus'],
       kelasId: map['kelasId'],
+      createAt: map['createAt'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['createAt'])
+          : null,
+      updateAt: map['updateAt'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['updateAt'])
+          : null,
+      status: map['status'] == 1,
     );
   }
 }
