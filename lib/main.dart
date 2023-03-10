@@ -4,13 +4,23 @@ import 'package:optima/pages/get_started.dart';
 import 'package:optima/pages/home_page.dart';
 import 'package:optima/pages/main_page.dart';
 import 'package:optima/pages/splash_screen.dart';
+import 'package:provider/provider.dart';
+
+import 'database/provider/kelas_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => KelasProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override

@@ -16,14 +16,14 @@ class KelasProvider extends ChangeNotifier {
 
   Future<void> fetchKelasList() async {
     final db = await _databaseHelper.db;
-    final kelasList = await db!.query(TabelKelas().toString());
+    final kelasList = await db!.query(TabelKelas.tableName);
     _kelasList = kelasList.map((e) => TabelKelas.fromMap(e)).toList();
     notifyListeners();
   }
 
   Future<int> insertKelas(TabelKelas kelas) async {
     final db = await _databaseHelper.db;
-    final result = await db!.insert(TabelKelas().toString(), kelas.toMap());
+    final result = await db!.insert(TabelKelas.tableName, kelas.toMap());
     fetchKelasList();
     return result;
   }
@@ -31,7 +31,7 @@ class KelasProvider extends ChangeNotifier {
   Future<int> updateKelas(TabelKelas kelas) async {
     final db = await _databaseHelper.db;
     final result = await db!.update(
-      TabelKelas().toString(),
+      TabelKelas.tableName,
       kelas.toMap(),
       where: 'kelasId = ?',
       whereArgs: [kelas.kelasId],
@@ -43,7 +43,7 @@ class KelasProvider extends ChangeNotifier {
   Future<int> deleteKelas(int kelasId) async {
     final db = await _databaseHelper.db;
     final result = await db!.delete(
-      TabelKelas().toString(),
+      TabelKelas.tableName,
       where: 'kelasId = ?',
       whereArgs: [kelasId],
     );

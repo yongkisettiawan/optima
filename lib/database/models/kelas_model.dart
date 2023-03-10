@@ -1,27 +1,30 @@
+import 'package:optima/database/models/silabus_model.dart';
+
 class TabelKelas {
+  static const String tableName = 'tabelkelas';
+
   int? kelasId;
   String? namaKelas;
-  int? silabusId;
   int? jumlahSilabus;
   DateTime? createAt;
   DateTime? updateAt;
   bool? status;
+  List<TabelSilabus>? silabus;
 
   TabelKelas({
     this.kelasId,
     this.namaKelas,
-    this.silabusId,
     this.jumlahSilabus,
     this.createAt,
     this.updateAt,
     this.status,
+    this.silabus,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'kelasId': kelasId,
       'namaKelas': namaKelas,
-      'silabusId': silabusId,
       'jumlahSilabus': jumlahSilabus,
       'createAt': createAt?.millisecondsSinceEpoch,
       'updateAt': updateAt?.millisecondsSinceEpoch,
@@ -33,7 +36,6 @@ class TabelKelas {
     return TabelKelas(
       kelasId: map['kelasId'],
       namaKelas: map['namaKelas'],
-      silabusId: map['silabusId'],
       jumlahSilabus: map['jumlahSilabus'],
       createAt: map['createAt'] != null
           ? DateTime.fromMillisecondsSinceEpoch(map['createAt'])
@@ -42,6 +44,7 @@ class TabelKelas {
           ? DateTime.fromMillisecondsSinceEpoch(map['updateAt'])
           : null,
       status: map['status'] == 1,
+      silabus: [],
     );
   }
 }

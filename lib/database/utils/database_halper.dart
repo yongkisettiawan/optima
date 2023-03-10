@@ -25,7 +25,7 @@ class DatabaseHelper {
   Future<void> _createDb(Database db, int version) async {
     // create TabelKelas table
     await db.execute('''
-      CREATE TABLE ${TabelKelas().toString()} (
+      CREATE TABLE ${TabelKelas.tableName} (
         kelasId INTEGER PRIMARY KEY AUTOINCREMENT,
         namaKelas TEXT,
         jumlahSilabus INTEGER,
@@ -37,13 +37,13 @@ class DatabaseHelper {
 
     // create TabelSilabus table
     await db.execute('''
-      CREATE TABLE ${TabelSilabus().toString()} (
+      CREATE TABLE ${TabelSilabus().runtimeType.toString()} (
         silabusId INTEGER PRIMARY KEY AUTOINCREMENT,
         modul TEXT,
         tugas TEXT,
         status INTEGER,
         kelasId INTEGER,
-        FOREIGN KEY(kelasId) REFERENCES ${TabelKelas().toString()}(kelasId)
+        FOREIGN KEY(kelasId) REFERENCES ${TabelKelas.tableName}(kelasId)
       )
     ''');
   }
