@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import '../shared/theme.dart';
 
 class CustomTextFormFile extends StatelessWidget {
-  final VoidCallback deleteCallback;
+  final void Function(int) deleteCallback;
+  int index;
 
-  const CustomTextFormFile({
+  CustomTextFormFile({
     Key? key,
+    required this.index,
     required this.deleteCallback,
   }) : super(key: key);
 
@@ -32,9 +34,7 @@ class CustomTextFormFile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(defaultRadius),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    defaultRadius,
-                  ),
+                  borderRadius: BorderRadius.circular(defaultRadius),
                   borderSide: BorderSide(
                     color: kPrimaryColor,
                   ),
@@ -46,7 +46,7 @@ class CustomTextFormFile extends StatelessWidget {
             width: 10,
           ),
           IconButton(
-            onPressed: deleteCallback,
+            onPressed: () => deleteCallback(index),
             icon: Icon(Icons.delete, color: kGreyTextColor),
             splashRadius: 24,
             padding: EdgeInsets.zero,

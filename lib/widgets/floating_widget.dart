@@ -15,22 +15,32 @@ class FloatingWidget extends StatefulWidget {
 
 class _FloatingWidgetState extends State<FloatingWidget> {
   final List<CustomTextFormFile> _customTextFormFiles = [];
-
-  void _addCustomTextFormFile() {
+  void _addCustomTextFormFile(int index) {
     setState(() {
       _customTextFormFiles.add(
         CustomTextFormFile(
-          deleteCallback: () {
-            _removeCustomTextFormFile();
+          key: ValueKey(index),
+          deleteCallback: (int index) {
+            _removeCustomTextFormFile(index);
+            print('romove $index');
           },
+          index: index,
         ),
       );
     });
+    print('add $index');
   }
 
-  void _removeCustomTextFormFile() {
+  void _removeCustomTextFormFile(int i) {
     setState(() {
-      _customTextFormFiles.removeLast();
+      _customTextFormFiles
+          .removeWhere((customTextFormFile) => customTextFormFile.index == i);
+      _customTextFormFiles.sort((a, b) => a.index.compareTo(b.index));
+
+      for (int i = 0; i < _customTextFormFiles.length; i++) {
+        _customTextFormFiles[i].index = i;
+      }
+      print('nilai $i');
     });
   }
 
@@ -106,7 +116,10 @@ class _FloatingWidgetState extends State<FloatingWidget> {
                               ),
                             ),
                             IconButton(
-                              onPressed: _addCustomTextFormFile,
+                              onPressed: () {
+                                _addCustomTextFormFile(
+                                    _customTextFormFiles.length);
+                              },
                               icon: Icon(Icons.add, color: kGreyTextColor),
                               splashRadius: 24,
                               padding: EdgeInsets.zero,
