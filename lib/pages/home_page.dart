@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:optima/database/provider/kelas_provider.dart';
 import 'package:optima/database/utils/database_halper.dart';
 import 'package:optima/database/models/kelas_model.dart';
 import 'package:optima/shared/theme.dart';
 import '../widgets/floating_widget.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,74 +25,84 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    Provider.of<KelasProvider>(context, listen: false).fetchKelasList();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Widget content() {
-      return GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(context, '/classroompage');
-        },
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          margin: const EdgeInsets.only(bottom: 15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(defaultRadius),
-            color: kWhiteColor,
-          ),
-          child: Row(
-            children: [
-              Container(
-                height: 60,
-                width: 60,
+    Widget content(List<TabelKelas> kelasList) {
+      return ListView.builder(
+          itemCount: kelasList.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, '/classroompage');
+              },
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(bottom: 15),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: kPrimaryColor,
+                  borderRadius: BorderRadius.circular(defaultRadius),
+                  color: kWhiteColor,
                 ),
-                child: Center(
-                  child: Image.asset(
-                    'assets/DatabaseOutlined.png',
-                    width: 32,
-                    height: 32,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "pelajaran.title",
-                    style: textStyle.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                child: Row(
+                  children: [
+                    Container(
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: kPrimaryColor,
+                      ),
+                      child: Center(
+                        child: Image.asset(
+                          'assets/DatabaseOutlined.png',
+                          width: 32,
+                          height: 32,
+                        ),
+                      ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        '12 0f 12 ',
-                        style: textStyle.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.normal,
-                          color: kSecondaryColor,
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "pelajaran.title",
+                          style: textStyle.copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      Text(
-                        'session finished',
-                        style: textStyle.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.normal,
+                        Row(
+                          children: [
+                            Text(
+                              '12 0f 12 ',
+                              style: textStyle.copyWith(
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal,
+                                color: kSecondaryColor,
+                              ),
+                            ),
+                            Text(
+                              'session finished',
+                              style: textStyle.copyWith(
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      );
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            );
+          });
     }
 
     Widget header() {
@@ -117,7 +129,9 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 15,
             ),
-            content(),
+            Consumer<KelasProvider>(builder: (context, kelasProvider, _) {
+              return content(kelasProvider.kelasList);
+            })
           ],
         ),
       );
