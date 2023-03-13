@@ -28,6 +28,16 @@ class SilabusProvider extends ChangeNotifier {
     return result;
   }
 
+  Future<void> insertSilabusBatch(List<TabelSilabus> silabus) async {
+    final db = await _databaseHelper.db;
+    final batch = db!.batch();
+    for (final s in silabus) {
+      batch.insert(TabelSilabus.tableName, s.toMap());
+    }
+    await batch.commit();
+    fetchSilabusList();
+  }
+
   Future<int> updateSilabus(TabelSilabus silabus) async {
     final db = await _databaseHelper.db;
     final result = await db!.update(

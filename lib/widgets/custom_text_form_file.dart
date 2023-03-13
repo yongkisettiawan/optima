@@ -7,6 +7,7 @@ import '../shared/theme.dart';
 class CustomTextFormFile extends StatefulWidget {
   const CustomTextFormFile({
     Key? key,
+    required TextEditingController controller,
   }) : super(key: key);
 
   @override
@@ -14,7 +15,7 @@ class CustomTextFormFile extends StatefulWidget {
 }
 
 class _CustomTextFormFileState extends State<CustomTextFormFile> {
-  final TextEditingController _namaSilabusController = TextEditingController();
+  final TextEditingController controller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -27,7 +28,7 @@ class _CustomTextFormFileState extends State<CustomTextFormFile> {
           children: [
             Expanded(
               child: TextFormField(
-                controller: _namaSilabusController,
+                controller: controller,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 10,

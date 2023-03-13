@@ -1,8 +1,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:optima/database/utils/database_halper.dart';
 import 'package:optima/shared/theme.dart';
 import 'package:optima/widgets/custom_text_form_file.dart';
+import 'package:provider/provider.dart';
+
+import '../database/models/kelas_model.dart';
+import '../database/models/silabus_model.dart';
+import '../database/provider/kelas_provider.dart';
+import '../database/provider/silabus_provider.dart';
 
 class FloatingWidget extends StatefulWidget {
   final VoidCallback hideCallback;
@@ -16,34 +23,54 @@ class FloatingWidget extends StatefulWidget {
 class _FloatingWidgetState extends State<FloatingWidget> {
   final _formKey = GlobalKey<FormState>();
   final _namaKelasController = TextEditingController();
-  final List<CustomTextFormFile> _customTextFormFiles = [];
+  final List<TextEditingController> _silabusControllers = [];
+  int _silabusCount = 0;
 
   @override
   void dispose() {
     _namaKelasController.dispose();
+    _silabusControllers.forEach((controller) => controller.dispose());
     super.dispose();
   }
 
-  //tambah widget input silabus
-  void _addCustomTextFormFile(int index) {
+  void _addSilabus() {
     setState(() {
-      _customTextFormFiles.add(
-        const CustomTextFormFile(),
-      );
+      _silabusControllers.add(TextEditingController());
+      _silabusCount++;
     });
+  }
+
+  void _saveData() async {
+    if (_formKey.currentState!.validate()) {
+      // Insert Kelas
+      final kelasProvider = Provider.of<KelasProvider>(context, listen: false);
+      final kelas = TabelKelas(namaKelas: _namaKelasController.text);
+      await kelasProvider.insertKelas(kelas);
+
+      // Insert Silabus
+      final silabusProvider =
+          Provider.of<SilabusProvider>(context, listen: false);
+      final silabus = _silabusControllers
+          .map((controller) => TabelSilabus(
+                kelasId: kelas.kelasId!,
+                namaSilabus: controller.text,
+              ))
+          .toList();
+      await silabusProvider.insertSilabusBatch(silabus);
+
+      widget.hideCallback();
+    }
   }
 
   //hapus widget input silabus
   void _removeCustomTextFormFile(int i) {
     setState(() {
-      _customTextFormFiles.removeLast();
+      _silabusControllers.removeLast();
+      _silabusCount--;
     });
   }
 
   //save data
-  Future<void> _saveKelas() async {
-    Navigator.of(context).pop();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +135,12 @@ class _FloatingWidgetState extends State<FloatingWidget> {
                               ),
                             ),
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Tidak Boleh Kosong';
+                            }
+                            return null;
+                          },
                         ),
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 10),
@@ -127,7 +160,7 @@ class _FloatingWidgetState extends State<FloatingWidget> {
                                   IconButton(
                                     onPressed: () {
                                       _removeCustomTextFormFile(
-                                          _customTextFormFiles.length - 1);
+                                          _silabusControllers.length - 1);
                                     },
                                     icon: Icon(Icons.remove,
                                         color: kGreyTextColor),
@@ -135,10 +168,7 @@ class _FloatingWidgetState extends State<FloatingWidget> {
                                     padding: EdgeInsets.zero,
                                   ),
                                   IconButton(
-                                    onPressed: () {
-                                      _addCustomTextFormFile(
-                                          _customTextFormFiles.length);
-                                    },
+                                    onPressed: _addSilabus,
                                     icon:
                                         Icon(Icons.add, color: kGreyTextColor),
                                     splashRadius: 24,
@@ -150,7 +180,11 @@ class _FloatingWidgetState extends State<FloatingWidget> {
                             ],
                           ),
                         ),
-                        ..._customTextFormFiles,
+                        ...List.generate(
+                          _silabusCount,
+                          (index) => CustomTextFormFile(
+                              controller: _silabusControllers[index]),
+                        ),
                       ],
                     ),
                   ),
@@ -185,7 +219,7 @@ class _FloatingWidgetState extends State<FloatingWidget> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: kPrimaryColor,
                           ),
-                          onPressed: () {},
+                          onPressed: _saveData,
                           child: Text(
                             'simpan',
                             style: textStyle.copyWith(

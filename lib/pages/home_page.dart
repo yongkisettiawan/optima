@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "pelajaran.title",
+                            kelasList[index].namaKelas!,
                             style: textStyle.copyWith(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
