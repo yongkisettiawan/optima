@@ -14,34 +14,35 @@ class FloatingWidget extends StatefulWidget {
 }
 
 class _FloatingWidgetState extends State<FloatingWidget> {
+  final _formKey = GlobalKey<FormState>();
+  final _namaKelasController = TextEditingController();
   final List<CustomTextFormFile> _customTextFormFiles = [];
+
+  @override
+  void dispose() {
+    _namaKelasController.dispose();
+    super.dispose();
+  }
+
+  //tambah widget input silabus
   void _addCustomTextFormFile(int index) {
     setState(() {
       _customTextFormFiles.add(
-        CustomTextFormFile(
-          key: ValueKey(index),
-          deleteCallback: (int index) {
-            _removeCustomTextFormFile(index);
-            // print('romove $index');
-          },
-          index: index,
-        ),
+        const CustomTextFormFile(),
       );
     });
-    // print('add $index');
   }
 
+  //hapus widget input silabus
   void _removeCustomTextFormFile(int i) {
     setState(() {
-      _customTextFormFiles
-          .removeWhere((customTextFormFile) => customTextFormFile.index == i);
-      _customTextFormFiles.sort((a, b) => a.index.compareTo(b.index));
-
-      for (int i = 0; i < _customTextFormFiles.length; i++) {
-        _customTextFormFiles[i].index = i;
-      }
-      // print('nilai $i');
+      _customTextFormFiles.removeLast();
     });
+  }
+
+  //save data
+  Future<void> _saveKelas() async {
+    Navigator.of(context).pop();
   }
 
   @override
@@ -70,110 +71,133 @@ class _FloatingWidgetState extends State<FloatingWidget> {
                 borderRadius: BorderRadius.circular(defaultRadius)),
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: [
-                const Center(
-                  child: Text(
-                    'Pelajaran Baru',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  //Title
+                  const Center(
+                    child: Text(
+                      'Pelajaran Baru',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Expanded(
-                  child: ListView(
-                    children: [
-                      TextFormField(
-                        decoration: InputDecoration(
-                          // contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-                          hintText: 'judul',
-                          hintStyle: textStyle.copyWith(
-                            color: kGreyTextColor,
-                            fontSize: 14,
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: kPrimaryColor,
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        //input nama kelas
+                        TextFormField(
+                          controller: _namaKelasController,
+                          decoration: InputDecoration(
+                            // contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                            hintText: 'judul',
+                            hintStyle: textStyle.copyWith(
+                              color: kGreyTextColor,
+                              fontSize: 14,
                             ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Silabus',
-                              style: textStyle.copyWith(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: kPrimaryColor,
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {
-                                _addCustomTextFormFile(
-                                    _customTextFormFiles.length);
-                              },
-                              icon: Icon(Icons.add, color: kGreyTextColor),
-                              splashRadius: 24,
-                              padding: EdgeInsets.zero,
-                              constraints: BoxConstraints(),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              //silabus title
+                              Text(
+                                'Silabus',
+                                style: textStyle.copyWith(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      _removeCustomTextFormFile(
+                                          _customTextFormFiles.length - 1);
+                                    },
+                                    icon: Icon(Icons.remove,
+                                        color: kGreyTextColor),
+                                    splashRadius: 24,
+                                    padding: EdgeInsets.zero,
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      _addCustomTextFormFile(
+                                          _customTextFormFiles.length);
+                                    },
+                                    icon:
+                                        Icon(Icons.add, color: kGreyTextColor),
+                                    splashRadius: 24,
+                                    padding: EdgeInsets.zero,
+                                    // constraints: BoxConstraints(),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        ..._customTextFormFiles,
+                      ],
+                    ),
+                  ),
+                  //button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            widget.hideCallback();
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: kWhiteColor,
+                              side: BorderSide(
+                                color: kPrimaryColor,
+                                width: 1,
+                              )),
+                          child: Text(
+                            'batal',
+                            style: textStyle.copyWith(
+                              color: kPrimaryColor,
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                      ..._customTextFormFiles,
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: kPrimaryColor,
+                          ),
+                          onPressed: () {},
+                          child: Text(
+                            'simpan',
+                            style: textStyle.copyWith(
+                              color: kWhiteColor,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          widget.hideCallback();
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: kWhiteColor,
-                            side: BorderSide(
-                              color: kPrimaryColor,
-                              width: 1,
-                            )),
-                        child: Text(
-                          'batal',
-                          style: textStyle.copyWith(
-                            color: kPrimaryColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: kPrimaryColor,
-                        ),
-                        onPressed: () {},
-                        child: Text(
-                          'simpan',
-                          style: textStyle.copyWith(
-                            color: kWhiteColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
